@@ -14,6 +14,10 @@ class ProductServiceModel {
     static async getAllProducts() {
         return await productModel.find();
     }
+    static async getProductsByFilter(query) {
+        console.log(query);
+        return await productModel.find(query);
+    }
     static async createProduct(newProduct) {
         return await productModel.create(newProduct);
     }

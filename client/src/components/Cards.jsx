@@ -19,9 +19,11 @@ const Cards = () => {
 
     const updateCards = () => {
         if(filteredData.length > 0) {
-            axios.get(`${api}/products?${keysfilteredData.map((item, index) => `${item}=${filteredData[index]}`).join('&')}`)
+            axios.get(`${api}/product?${keysfilteredData.map((item, index) => `${item}=${filteredData[index]}`).join('&')}`)
             .then(res => {
                 setCardList(res.data);
+                console.log(keysfilteredData.map((item, index) => `${item}=${filteredData[index]}`).join('&'))
+                console.log(res.data);
             })
             .catch(err => {
                 console.log(err);
