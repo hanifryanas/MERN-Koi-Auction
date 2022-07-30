@@ -1,12 +1,16 @@
 import React from 'react'
-import { FiMenu, FiSettings, FiPlus } from 'react-icons/fi'
+import { FiMenu, FiSettings, FiPlus, FiClipboard } from 'react-icons/fi'
 import { Tooltip, Button } from "@material-tailwind/react"
 import { useStateContext } from '../contexts/ContextProvider'
 import { DropdownUser, LoginModal, LogoutModal, PasswordModal, PostProductModal } from '/'
 
 const Header = () => {
-  const { activeMenu, setActiveMenu, popUp, setPopUp, isLoggedIn, isAdmin } = useStateContext();
+  const { activeMenu, setActiveMenu, popUp, setPopUp, isLoggedIn, isAdmin, mainView, setMainView } = useStateContext();
   
+  const toggleMainView = () => {
+    setMainView(!mainView)
+  }
+
   const toggleMenu = () => {
     setActiveMenu(!activeMenu)
   }
@@ -24,14 +28,16 @@ const Header = () => {
   
   
   return (
-    <div className={`flex flex-row justify-between max-w-full
-    ${activeMenu ? 'md:ml-72' : 'flex-2' }`}>
-      <div className='ml-5 mt-1.5'>
+    <div className={`flex flex-row justify-between max-w-full ${isAdmin ? 'flex-2' : activeMenu ? 'md:ml-52' : 'flex-2' }`}>
+      <div className={`ml-5 mt-1.5`}>
         <Tooltip content="Menu" className='text-xs text-black bg-transparent'>
-          <Button className='bg-white shadow-none border-none'><FiMenu  className='text-2xl text-neutral-900 bg-white' onClick={toggleMenu}/></Button>
+          <Button className={`${isAdmin ? `hidden` : `bg-white shadow-none border-none`}`}><FiMenu  className='text-2xl text-neutral-900 bg-white' onClick={toggleMenu}/></Button>
         </Tooltip>
       </div>
       <div className='flex flex-nowarp justify-end mr-5 mt-1.5'>
+      {isAdmin && <Tooltip content="Toggle View" className='text-xs text-black bg-transparent'>
+          <Button className='bg-white shadow-none border-none'> <FiClipboard className='text-2xl text-neutral-900 bg-white mr-5' onClick={toggleMainView}/> 
+          </Button></Tooltip>}
         {isAdmin && <Tooltip content="Post Product" className='text-xs text-black bg-transparent'>
           <Button className='bg-white shadow-none border-none'> <FiPlus className='text-2xl text-neutral-900 bg-white mr-5' onClick={togglePostProduct}/> 
           </Button></Tooltip>}

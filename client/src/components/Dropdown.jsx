@@ -28,9 +28,9 @@ const Dropdown = (index) => {
 
 return (
 <div>
-  <div className={`flex flex-row justify-start items-center ml-6 mt-1 h-8 ${activeMenu ? 'w-72' : 'hidden'}`}>
+  <div className={`flex flex-row justify-start items-center ml-8 mt-1 h-6 ${activeMenu ? 'w-52' : 'hidden'}`}>
     <div className='flex flex-row text-right justify-items-end'>
-      <select onChange={handleSelection} defaultValue={'default'} className='block h-8 w-40 bg-gray-200 border border-gray-200 text-gray-700 py-1 px-2 pr-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 text-sm'>
+      <select onChange={handleSelection} defaultValue={'default'} className='block h-6 w-28 bg-gray-200 border border-gray-200 text-gray-700 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 text-xs'>
         {!activeSelection && <option hidden value={'default'}></option>}
         {dropdownData.map((item, index) => {
           return (
@@ -41,7 +41,7 @@ return (
       </select>
       <Tooltip content="Clear Filter" className= 'text-xs -top-10'>
         <Button className='shadow-none' onClick={handleCloseSelection}>
-          <FiX className={`text-2xl ml-1 mt-1 ${activeSelection ? 'text-red-800' : 'hidden'}`}/>
+          <FiX className={`text-lg ml-0.5 mt-0.5 ${activeSelection ? 'text-red-800' : 'hidden'}`}/>
         </Button>
       </Tooltip>
     </div>

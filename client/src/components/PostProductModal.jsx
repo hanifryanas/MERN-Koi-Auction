@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import axios from 'axios'
 import { useStateContext } from '../contexts/ContextProvider'
-import { biddingData } from '../data/Template'
+import { biddingData, postProductData } from '../data/Template'
 
 const PostProductModal = () => {
     const [rangeValue, setRangeValue] = useState(0)
@@ -18,20 +18,22 @@ const PostProductModal = () => {
     const handlePostProduct = (e) => {
         e.preventDefault();
         let dataType = document.getElementById('koiType').value;
-        let dataSize = document.getElementById('koiSize').value;
+        let dataLength = document.getElementById('koiLength').value;
         let dataGender = document.getElementById('koiGender').value;
         let dataPrice = document.getElementById('koiPrice').value;
+        let dataDate = document.getElementById('koiDate').value;
         let dataImage = document.getElementById('koiPicture').files[0];
-        if (dataType === null || dataSize === null || dataGender === null || dataPrice === null || rangeValue===0 || dataImage === undefined) {
+        if (dataType === null || dataLength === null || dataGender === null || dataPrice === null || rangeValue===0 || dataDate === null || dataImage === undefined) {
             alert('Please fill all the fields') 
         }
         else {
             const newData = new FormData()
             newData.append('type', dataType)
-            newData.append('size', dataSize)
+            newData.append('length', dataLength)
             newData.append('gender', dataGender)
             newData.append('price', dataPrice)
             newData.append('range', rangeValue)
+            newData.append('date', dataDate)
             newData.append('image', dataImage)
             
             axios.post(`${api}/product`, newData, {
@@ -47,24 +49,30 @@ const PostProductModal = () => {
     }
     
     return (
-    <div className={`${popUp==='post' && 'bg-zinc-200 opacity-95 fixed inset-0 z-50'}`} onClick={handleCloseModal}>
+        <div className={`${popUp==='post' && 'bg-zinc-200 opacity-95 fixed inset-0 z-50'}`} onClick={handleCloseModal}>
             <div id='outsideModal' className="flex h-screen justify-center items-center">
                 <div className="flex-col justify-center bg-white border-4 border-gray-500 rounded-xl w-1/6">
                     <p className='mb-4 mt-4 text-2xl'>Add Koi</p>
                     <form className='flex flex-col justify-center items-center' onSubmit={handlePostProduct}> 
                         <div className='flex flex-col justify-start w-3/4'>
-                            <p className='flex text-left'>Type</p> <input type='text' placeholder='ex. Kohaku, Shiro, etc' className='w-full border-2 border-gray-500 rounded-lg mb-4' id='koiType'/>
+                            <p className='flex text-left'>Type</p>
+                            <select className='w-full border-2 border-gray-500 rounded-lg mb-4' id='koiType'>
+                                <option hidden className='text-neutral-400'>Select</option>
+                                {postProductData[0].dropdown.map((item, index) => {
+                                    return <option key={index} value={item}>{item}</option>
+                                })}
+                            </select>
                         </div>
                         <div className='flex flex-col justify-start w-3/4'>
-                            <p className='flex text-left'>Size (cm)</p> <input type='number' placeholder='ex. 51' className='w-full border-2 border-gray-500 rounded-lg mb-4' id='koiSize'/>
+                            <p className='flex text-left'>Length (cm)</p> <input type='number' placeholder='ex. 51' className='w-full border-2 border-gray-500 rounded-lg mb-4' id='koiLength'/>
                         </div>
                         <div className='flex flex-col justify-start w-3/4'>
                             <p className='flex text-left'>Gender</p> 
                             <select className='w-full border-2 border-gray-500 rounded-lg mb-4' id='koiGender'>
                                 <option hidden>Select</option>
-                                <option value='Male'>Male</option>
-                                <option value='Female'>Female</option>
-                                <option value='Unknown'>Unknown</option>
+                                {postProductData[1].dropdown.map((item, index) => {
+                                    return <option key={index} value={item}>{item}</option>
+                                })}
                             </select>
                         </div>
                         <div className='flex flex-col justify-start w-3/4'>
@@ -80,9 +88,12 @@ const PostProductModal = () => {
                                             <label htmlFor={`biddingRange${index}`}>{data.label}</label>
                                         </div>
                                     )
+                                })
                                 }
-                                )}
                             </div>
+                        </div>
+                        <div className='flex flex-col justify-start w-3/4'>
+                            <p className='flex text-left'>Due date auction</p> <input type='datetime-local' className='w-full border-2 border-gray-500 rounded-lg mb-4' id='koiDate' min={new Date().toISOString().split('T')[0]}/>
                         </div>
                         <div className='flex flex-col justify-start w-3/4'>
                             <p className='flex text-xs text-left'>Picture (max. 5MB - jpeg/png)</p> <input type='file' className='w-full border-2 border-gray-500 rounded-lg mb-6' id='koiPicture' accept='image/png, image/jpeg'/>

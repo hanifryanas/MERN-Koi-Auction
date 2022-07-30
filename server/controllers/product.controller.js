@@ -1,5 +1,4 @@
 const ProductServiceModel = require('../models/product.model');
-const multer = require('multer');
 
 class ProductController {
     static async getProducts(req, res) {
@@ -10,16 +9,16 @@ class ProductController {
         if(Size) {
             switch(Size.charAt(0)) {
                 case 'M':
-                    query.size = { $lt: 25 };
+                    query.length = { $lt: 25 };
                     break;
                 case 'S':
-                    query.size = { $gte: 25, $lte: 40 };
+                    query.length = { $gte: 25, $lte: 40 };
                     break;
                 case 'L':
-                    query.size = { $gt: 40, $lte: 60 };
+                    query.length = { $gt: 40, $lte: 60 };
                     break;
                 case 'J':
-                    query.size = { $gt: 60 };
+                    query.length = { $gt: 60 };
                     break;
             }
         }
@@ -38,7 +37,7 @@ class ProductController {
                     break;
             }
         }
-        (query === {}) ?
+        (JSON.stringify(query)==='{}') ?
         ProductServiceModel.getAllProducts()
         .then((products) => {
             products.forEach((product) => {
@@ -69,13 +68,14 @@ class ProductController {
     }
     
     static async createProduct(req, res) {
-        const { Type, Size, gender, price, range } = req.body;
+        const { type, length, gender, price, range, date } = req.body;
         let newProduct = {
-            Type,
-            Size,
+            type,
+            length,
             gender,
             price,
-            range
+            range,
+            date
         }
         if(req.file){
             newProduct.image = req.file.path;

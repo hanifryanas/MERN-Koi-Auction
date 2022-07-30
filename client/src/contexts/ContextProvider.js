@@ -20,6 +20,7 @@ const [activeMenu, setActiveMenu] = useState(true);
 const [isFiltered, setIsFiltered] = useState(initialFilterState);
 const [popUp, setPopUp] = useState('');
 const [isAdmin, setIsAdmin] = useState(false);
+const [mainView, setMainView] = useState(true);
 const [isLoggedIn, setIsLoggedIn] = useState(false);
 const [user, setUser] = useState({});
 const [newUpdateProduct, setNewUpdateProduct] = useState('');
@@ -48,7 +49,7 @@ const handleFilter = (filterSelector, value) => {
 }
 
 return (
-  <StateContext.Provider value={{ api, activeMenu, setActiveMenu, handleFilter, isFiltered, popUp, setPopUp, isAdmin, setIsAdmin, isLoggedIn, setIsLoggedIn, user, setUser, newUpdateProduct, setNewUpdateProduct }}>
+  <StateContext.Provider value={{ api, activeMenu, setActiveMenu, handleFilter, isFiltered, popUp, setPopUp, isAdmin, setIsAdmin, mainView, setMainView, isLoggedIn, setIsLoggedIn, user, setUser, newUpdateProduct, setNewUpdateProduct }}>
     {children}
   </StateContext.Provider>
   );

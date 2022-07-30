@@ -4,7 +4,7 @@ import axios from 'axios';
 
 
 const Cards = () => {
-    const { api, activeMenu, isFiltered, newUpdateProduct } = useStateContext();
+    const { api, activeMenu, setActiveMenu, isAdmin, isFiltered, newUpdateProduct } = useStateContext();
 
     const [cardList, setCardList] = useState([]);
 
@@ -22,8 +22,6 @@ const Cards = () => {
             axios.get(`${api}/product?${keysfilteredData.map((item, index) => `${item}=${filteredData[index]}`).join('&')}`)
             .then(res => {
                 setCardList(res.data);
-                console.log(keysfilteredData.map((item, index) => `${item}=${filteredData[index]}`).join('&'))
-                console.log(res.data);
             })
             .catch(err => {
                 console.log(err);
@@ -40,9 +38,40 @@ const Cards = () => {
         }
     }
 
+    const toggleMenuAdmin = () => {
+        setActiveMenu(false);
+    }
+
+    const handleFormatTime = (date) => {
+        let time = new Date(date);
+        let hours = time.getHours();
+        let minutes = time.getMinutes();
+        return `${hours}:${minutes < 10 ? '0' + minutes : minutes}`;
+    }
+
+    const handleFormatDate = (date) => {
+        let time = new Date(date);
+        let day = time.getDate();
+        let month = time.getMonth();
+        const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        return `${monthNames[month]} ${day}`;
+    }
+
+    const handleFormatLength = (size) => {
+        return size + ' cm';
+    }
+
+    const handleFormatPrice = (price) => {
+        return ('Rp '+ price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."));
+    }
+
+    const handleFormatRange = (value) => {
+        return value.toString().slice(0, -3) + 'K'
+    }
+
     return (
-        <div className={`${activeMenu ? 'ml-72' : 'w-full'}`}>
-            <p className={`ml-10 mt-10 text-left ${filteredData.length===0 && 'hidden'}`} >Filtered : {keysfilteredData.map((item, index) => {
+        <div className={`${isAdmin ? toggleMenuAdmin : activeMenu ? 'ml-52' : 'w-full'}`}>
+            <p className={`ml-10 text-left ${filteredData.length===0 && 'hidden'}`}> Filtered : {keysfilteredData.map((item, index) => {
                 if(keysfilteredData.length>2){
                     if(index===keysfilteredData.length-1){
                         return ` & ${item}`
@@ -62,30 +91,36 @@ const Cards = () => {
                 }
             })}
             </p>           
-            <div className={`grid gap-5 ml-5 ${activeMenu ? `grid-cols-6` : `grid-cols-7`}`}>
+            <div className={`grid grid-rows-2 grid-cols-8 ml-5 w-full h-full
+            ${activeMenu ? 'md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-7' : 'md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 2xl:grid-cols-8'}`}>
                 {cardList.map((item, index) => {
                     return (
-                            <div className={`flex flex-col justify-start items-start rounded-xl border-2 ${filteredData.length===0 ? `mt-12` : `mt-2`}`} key={index}>
-                                <div className="flex flex-col w-full h-full">
-                                    <img src={item.image} alt={item.type} className="w-full h-4/5 rounded-t-xl object-fill"/>
-                                    <div className="flex flex-col w-full h-1/5">
-                                        <div className='flex flex-row w-full h-1/2'>
-                                            {Object.keys(item).filter((item, index)=> index>=1 && index<4).map((key, index) => {
-                                                return (
-                                                    <p className="flex justify-center items-center text-m text-neutral-600 w-1/3 border-1 shadow-md" key={index}>{item[key]}</p>
+                        <div className={`relative w-44 h-72 justify-start items-start rounded-xl border-2 mt-6`} key={index} id='cardItem'>
+                            <div className="flex justify-end align-middle">
+                                <div className= 'absolute bg-blue-100 opacity-50 text-red-700 text-sm rounded-tr-lg rounded-bl-lg text-right px-1'>{handleFormatTime(item.date)}<br/>{handleFormatDate(item.date)}</div>
+                            </div>
+                            <div className="flex flex-col w-full h-full">
+                                <img src={item.image} alt={item.type} className="w-full h-4/5 rounded-t-lg"/>
+                                <div className="flex flex-col w-full h-1/5">
+                                    <div className='flex flex-row w-full h-1/2'>
+                                        {Object.keys(item).filter((item)=> item==='length' || item==='type' || item==='gender' ).sort((a,b)=>a===b ? 0 : a<b ? 1 : -1).map((key, index) => {
+                                            return (
+                                                <p className="flex justify-center items-center text-sm text-neutral-600 w-1/3 border-1 shadow-md" key={index}>{(key==='length') ? handleFormatLength(item[key]) : item[key]}</p>
                                                 )}
-                                            )}
-                                        </div>
-                                        <div className='flex flex-row w-full h-1/2'>
-                                            {Object.keys(item).filter((item, index)=> index>=4 && index<6).map((key, index) => {
-                                                return (
-                                                    <p className={`flex justify-center items-center text-m text-neutral-600 border-1 shadow-md ${key==='price' ? `w-2/3` : `w-1/3`}`} key={index}>{item[key]}</p>
+                                            )
+                                        }
+                                    </div>
+                                    <div className='flex flex-row w-full h-1/2'>
+                                        {Object.keys(item).filter((item)=> item==='price' || item==='range').map((key, index) => {
+                                            return (
+                                                <p className={`flex justify-center items-center text-sm text-neutral-600 border-1 shadow-md ${key==='price' ? `w-2/3` : `w-1/3`}`} key={index}>{(key==='price') ? handleFormatPrice(item[key]) : handleFormatRange(item[key])}</p>
                                                 )}
-                                            )}
-                                        </div>
+                                            )
+                                        }
                                     </div>
                                 </div>
                             </div>
+                        </div>
                     )
                 })}
             </div>

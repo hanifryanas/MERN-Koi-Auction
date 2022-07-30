@@ -6,15 +6,18 @@ import {
   Routes,
   Route
 } from 'react-router-dom';
+import { useStateContext } from './contexts/ContextProvider';
 
 
 function App() {
+  const {isAdmin} = useStateContext();
+
   return (
-      <div className="App">
+    <div className="App">
       <Router>
         <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route path="/admin" element={<Admin />} />
+          {/* <Route path="/" element={<Home />} /> */}
+          {isAdmin ? <Route path="/" element={<Admin />} /> : <Route path="/" element={<Home />} />}
         </Routes>
       </Router>
     </div>

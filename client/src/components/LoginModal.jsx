@@ -4,7 +4,7 @@ import axios from 'axios'
 
 const LoginModal = () => {
 
-    const { api, popUp, setPopUp, isAdmin } = useStateContext()
+    const { api, popUp, setPopUp } = useStateContext()
     const [useForm, setUseForm] = useState('Login')
 
     const handleCloseModal = (e) => {
@@ -25,7 +25,6 @@ const LoginModal = () => {
             .then(res => {
                     localStorage.setItem('token', res.data.token);
                     alert('Login Success!');
-                    isAdmin ? (window.location.href = '/admin') : (window.location.href = '/')
                     setPopUp(null);
             })
             .catch(err => {

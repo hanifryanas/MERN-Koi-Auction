@@ -67,3 +67,23 @@ export const biddingData = [
         label : '500K',
     }
 ]
+
+export const postProductData = [
+    {
+        title : 'Type',
+        dropdown : [
+            'Kohaku',
+            'Shiro',
+            'Showa',
+            'Sanke',
+        ]
+    },
+    {
+        title : 'Gender',
+        dropdown : [
+            'Male',
+            'Female',
+            'Unknown',
+        ]
+    }
+]
