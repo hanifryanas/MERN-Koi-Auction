@@ -85,11 +85,53 @@ class ProductController {
             res.status(201).json({
                 message: 'Product created'
             });
-        }).catch((err) => {
+        })
+        .catch((err) => {
             res.status(500).json({
                 message: err
             });
-        });
+        })
+    }
+
+    static async updateProduct(req, res) {
+        const { id } = req.params;
+        const { type, length, gender, price, range, date } = req.body;
+        let updatedProduct = {
+            type,
+            length,
+            gender,
+            price,
+            range,
+            date
+        }
+        if(req.file){
+            updatedProduct.image = req.file.path;
+        }
+        ProductServiceModel.updateProduct(id, updatedProduct)
+        .then(() => {
+            res.status(200).json({
+                message: 'Product updated'
+            });
+        })
+        .catch((err) => {
+            res.status(500).json({
+                message: err
+            });
+        })
+    }
+    static async deleteProduct(req, res) {
+        const { id } = req.params;
+        ProductServiceModel.deleteProduct(id)
+        .then(() => {
+            res.status(200).json({
+                message: 'Product deleted'
+            });
+        })
+        .catch((err) => {
+            res.status(500).json({
+                message: err
+            });
+        })
     }
 }
 

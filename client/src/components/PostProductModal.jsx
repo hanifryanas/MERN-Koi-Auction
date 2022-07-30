@@ -93,7 +93,8 @@ const PostProductModal = () => {
                             </div>
                         </div>
                         <div className='flex flex-col justify-start w-3/4'>
-                            <p className='flex text-left'>Due date auction</p> <input type='datetime-local' className='w-full border-2 border-gray-500 rounded-lg mb-4' id='koiDate' min={new Date().toISOString().split('T')[0]}/>
+                            <p className='flex text-left'>Due date auction</p> 
+                            <input type='datetime-local' className='w-full border-2 border-gray-500 rounded-lg mb-4' id='koiDate' min={new Date().toISOString().slice(0, -8)}/>
                         </div>
                         <div className='flex flex-col justify-start w-3/4'>
                             <p className='flex text-xs text-left'>Picture (max. 5MB - jpeg/png)</p> <input type='file' className='w-full border-2 border-gray-500 rounded-lg mb-6' id='koiPicture' accept='image/png, image/jpeg'/>

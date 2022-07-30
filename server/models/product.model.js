@@ -21,6 +21,12 @@ class ProductServiceModel {
     static async createProduct(newProduct) {
         return await productModel.create(newProduct);
     }
+    static async updateProduct(id, product) {
+        return await productModel.findByIdAndUpdate(id, product);
+    }
+    static async deleteProduct(id) {
+        return await productModel.findByIdAndDelete(id);
+    }
 }
 
 module.exports = ProductServiceModel;
