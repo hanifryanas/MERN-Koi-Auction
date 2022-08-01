@@ -36,14 +36,14 @@ return (
                 </div>
             </div>
             <div className='flex flex-col w-1500 h-1/3 bg-blue-200'>
-                <OthersCard/>
+                <OthersCard detailProduct={detailProduct}/>
             </div>
         </div>
-            <div className='w-1/3 h-2/3 bg-green-300'>
-                <VideoCard/>
+            <div className='w-1/3 h-2/3 bg-slate-100'>
+                <VideoCard detailProduct={detailProduct}/>
             </div>
         <div className='flex flex-col w-1/3 h-full bg-slate-800'>
-            <TopBidder/>
+            <TopBidder detailProduct={detailProduct}/>
         </div>
     </div>
   )

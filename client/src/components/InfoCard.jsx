@@ -1,7 +1,7 @@
 import React from 'react'
 
 const InfoCard = (detailProduct) => {
-  const product = detailProduct.detailProduct;
+  let product = detailProduct.detailProduct;
   let percentageTimeLeft = (new Date(product.date) - new Date())/(1000*60*60*24);
   let timeLeftDay = Math.floor(percentageTimeLeft);
   let timeLeftHour = Math.floor((percentageTimeLeft - timeLeftDay)*24);
