@@ -8,7 +8,12 @@ const Header = () => {
   const { activeMenu, setActiveMenu, popUp, setPopUp, isLoggedIn, isAdmin, mainView, setMainView } = useStateContext();
   
   const toggleMainView = () => {
-    setMainView(!mainView)
+    if(localStorage.getItem('currentPage') === 'detail'){
+      window.location.href = '/';
+      localStorage.setItem('currentPage', 'home');
+    } else {
+      setMainView(!mainView);
+    }
   }
 
   const toggleMenu = () => {
@@ -28,23 +33,23 @@ const Header = () => {
   
   
   return (
-    <div className={`flex flex-row justify-between max-w-full ${isAdmin ? 'flex-2' : activeMenu ? 'md:ml-52' : 'flex-2' }`}>
-      <div className={`ml-5 mt-1.5`}>
-        <Tooltip content="Menu" className='text-xs text-black bg-transparent'>
-          <Button className={`${isAdmin ? `hidden` : `bg-white shadow-none border-none`}`}><FiMenu  className='text-2xl text-neutral-900 bg-white' onClick={toggleMenu}/></Button>
+    <div className={`flex flex-row justify-between max-w-full bg-slate-100 ${activeMenu ? 'md:ml-52' : 'flex-2' }`}>
+      <div className={`ml-5`}>
+        <Tooltip content="Menu" className='text-xs text-neutral-700'>
+          <Button className={`shadow-none border-none`}><FiMenu  className={`text-2xl text-neutral-900 ${!mainView && 'hidden'}`} onClick={toggleMenu}/></Button>
         </Tooltip>
       </div>
-      <div className='flex flex-nowarp justify-end mr-5 mt-1.5'>
-      {isAdmin && <Tooltip content="Toggle View" className='text-xs text-black bg-transparent'>
-          <Button className='bg-white shadow-none border-none'> <FiClipboard className='text-2xl text-neutral-900 bg-white mr-5' onClick={toggleMainView}/> 
+      <div className='flex flex-nowarp justify-end mr-5'>
+      {isAdmin && <Tooltip content="Toggle View" className='text-xs text-neutral-700'>
+          <Button className='shadow-none border-none'> <FiClipboard className='text-2xl mr-5 text-neutral-900' onClick={toggleMainView}/> 
           </Button></Tooltip>}
-        {isAdmin && <Tooltip content="Post Product" className='text-xs text-black bg-transparent'>
-          <Button className='bg-white shadow-none border-none'> <FiPlus className='text-2xl text-neutral-900 bg-white mr-5' onClick={togglePostProduct}/> 
+        {isAdmin && <Tooltip content="Post Product" className='text-xs text-neutral-700'>
+          <Button className='shadow-none border-none'> <FiPlus className='text-2xl mr-5 text-neutral-900' onClick={togglePostProduct}/> 
           </Button></Tooltip>}
-        <Tooltip content="Setting" className='text-xs text-black bg-transparent'>
-          <Button className='bg-white shadow-none border-none' ><FiSettings className='mr-3 text-xl text-neutral-900' onClick={toggleSetting}/></Button>
+        <Tooltip content="Setting" className='text-xs text-neutral-700'>
+          <Button className='shadow-none border-none' ><FiSettings className='mr-3 text-xl text-neutral-900' onClick={toggleSetting}/></Button>
         </Tooltip> 
-        <button className={`shadow-none text-md text-neutral-900 hover:text-neutral-500 ${isLoggedIn && 'hidden' }`} onClick={toggleLoginModal}>Login</button>
+        <button className={`shadow-none text-md cursor-pointer hover:text-neutral-500 ${isLoggedIn && 'hidden' }`} onClick={toggleLoginModal}>Login</button>
         <DropdownUser />
       </div>
       {popUp === 'login' && <LoginModal />}

@@ -66,6 +66,23 @@ class ProductController {
             res.end();
         })
     }
+
+    static async getProductById(req, res) {
+        const { id } = req.params;
+        ProductServiceModel.getProductById(id)
+        .then((product) => {
+            product.image = `${process.env.API}/${product.image}`;
+            res.status(200).json(product);
+        })
+        .catch((err) => {
+            res.status(500).json({
+                message: err
+            });
+        }
+        ).finally(() => {
+            res.end();
+        })
+    }
     
     static async createProduct(req, res) {
         const { type, length, gender, price, range, date } = req.body;
@@ -119,6 +136,23 @@ class ProductController {
             });
         })
     }
+
+    static async updatePriceByBidOrder(req, res) {
+        const { id } = req.params;
+        const { price } = req.body;
+        ProductServiceModel.updatePriceByBidOrder(id, price)
+        .then(() => {
+            res.status(200).json({
+                message: 'Product price updated'
+            });
+        })
+        .catch((err) => {
+            res.status(500).json({
+                message: err
+            });
+        })
+    }
+    
     static async deleteProduct(req, res) {
         const { id } = req.params;
         ProductServiceModel.deleteProduct(id)

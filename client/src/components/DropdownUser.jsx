@@ -22,8 +22,8 @@ const DropdownUser = () => {
   }
 
   return (
-    <div>
-        <select defaultValue={'username'} onChange={handleEventUser} className={`${isLoggedIn ? `flex flex-wrap shadow-none bg-transparent border-none text-right w-28 mt-1` : `hidden`}`}>
+    <div className='flex align-middle'>
+        <select defaultValue={'username'} onChange={handleEventUser} className={`${isLoggedIn ? `flex flex-wrap shadow-none bg-transparent border-none text-right w-28` : `hidden`}`}>
             <option value='username' hidden>{username}</option>
             <option value='changePassword' >Change Password</option>
             <option value='logout' >Logout</option>

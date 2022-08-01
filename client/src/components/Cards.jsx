@@ -4,7 +4,7 @@ import axios from 'axios';
 
 
 const Cards = () => {
-    const { api, activeMenu, setActiveMenu, isAdmin, isFiltered, newUpdateProduct } = useStateContext();
+    const { api, activeMenu, isAdmin, isFiltered, newUpdateProduct } = useStateContext();
 
     const [cardList, setCardList] = useState([]);
 
@@ -38,8 +38,9 @@ const Cards = () => {
         }
     }
 
-    const toggleMenuAdmin = () => {
-        setActiveMenu(false);
+    const handleClickCard = (item) => {
+        localStorage.setItem('currentPage', 'detail');
+        window.location.href = `/detail?id=${item._id}`;
     }
 
     const handleFormatTime = (date) => {
@@ -70,7 +71,7 @@ const Cards = () => {
     }
 
     return (
-        <div className={`${isAdmin ? toggleMenuAdmin : activeMenu ? 'ml-52' : 'w-full'}`}>
+        <div className={`bg-slate-100 ${ activeMenu ? 'ml-52' : 'w-full'}`}>
             <p className={`ml-10 text-left ${filteredData.length===0 && 'hidden'}`}> Filtered : {keysfilteredData.map((item, index) => {
                 if(keysfilteredData.length>2){
                     if(index===keysfilteredData.length-1){
@@ -95,7 +96,7 @@ const Cards = () => {
             ${activeMenu ? 'md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-7' : 'md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 2xl:grid-cols-8'}`}>
                 {cardList.map((item, index) => {
                     return (
-                        <div className={`relative w-44 h-72 justify-start items-start rounded-xl border-2 mt-6`} key={index} id='cardItem'>
+                        <div className={`relative w-44 h-72 justify-start items-start rounded-xl border-2 mt-6 cursor-pointer`} key={index} id='cardItem' onClick={()=>handleClickCard(item)}>
                             <div className="flex justify-end align-middle">
                                 <div className= 'absolute bg-blue-100 opacity-50 text-red-700 text-sm rounded-tr-lg rounded-bl-lg text-right px-1'>{handleFormatTime(item.date)}<br/>{handleFormatDate(item.date)}</div>
                             </div>
@@ -105,7 +106,7 @@ const Cards = () => {
                                     <div className='flex flex-row w-full h-1/2'>
                                         {Object.keys(item).filter((item)=> item==='length' || item==='type' || item==='gender' ).sort((a,b)=>a===b ? 0 : a<b ? 1 : -1).map((key, index) => {
                                             return (
-                                                <p className="flex justify-center items-center text-sm text-neutral-600 w-1/3 border-1 shadow-md" key={index}>{(key==='length') ? handleFormatLength(item[key]) : item[key]}</p>
+                                                <p className="flex justify-center items-center text-sm w-1/3 border-1 shadow-md" key={index}>{(key==='length') ? handleFormatLength(item[key]) : item[key]}</p>
                                                 )}
                                             )
                                         }
@@ -113,7 +114,7 @@ const Cards = () => {
                                     <div className='flex flex-row w-full h-1/2'>
                                         {Object.keys(item).filter((item)=> item==='price' || item==='range').map((key, index) => {
                                             return (
-                                                <p className={`flex justify-center items-center text-sm text-neutral-600 border-1 shadow-md ${key==='price' ? `w-2/3` : `w-1/3`}`} key={index}>{(key==='price') ? handleFormatPrice(item[key]) : handleFormatRange(item[key])}</p>
+                                                <p className={`flex justify-center items-center text-sm border-1 shadow-md ${key==='price' ? `w-2/3` : `w-1/3`}`} key={index}>{(key==='price') ? handleFormatPrice(item[key]) : handleFormatRange(item[key])}</p>
                                                 )}
                                             )
                                         }

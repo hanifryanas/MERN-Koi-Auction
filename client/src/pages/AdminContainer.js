@@ -1,5 +1,5 @@
 import React from 'react'
-import { Cards, Header, TableView } from '../components'
+import { Cards, Header, Sidebar, TableView } from '../components'
 import { useStateContext } from '../contexts/ContextProvider'
 
 const AdminContainer = () => {
@@ -8,6 +8,7 @@ const AdminContainer = () => {
   return (
     <div>
       <Header />
+      <Sidebar />
       {mainView ? <Cards /> : <TableView/>}
     </div>
   )

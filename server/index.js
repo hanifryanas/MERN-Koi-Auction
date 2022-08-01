@@ -25,6 +25,7 @@ app.options('*', cors())
     
 app.use('/user', require('./routes/user.routes'));
 app.use('/product', require('./routes/product.routes'));
+app.use('/order', require('./routes/bid.routes'));
     
 const port = process.env.PORT;
 app.listen(port, () => {

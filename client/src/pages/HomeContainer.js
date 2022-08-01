@@ -3,7 +3,7 @@ import { Header, Sidebar, Cards } from '../components'
 
 const HomeContainer = () => {
   return (
-    <div>
+    <div >
         <Header />
         <Sidebar/>
         <Cards />

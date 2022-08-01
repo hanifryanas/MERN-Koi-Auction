@@ -18,11 +18,17 @@ class ProductServiceModel {
     static async getProductsByFilter(query) {
         return await productModel.find(query).where('date').gt(new Date().toISOString()).sort({date: 1});
     }
+    static async getProductById(id) {
+        return await productModel.findOne({_id: id});
+    }
     static async createProduct(newProduct) {
         return await productModel.create(newProduct);
     }
     static async updateProduct(id, product) {
         return await productModel.findByIdAndUpdate(id, product);
+    }
+    static async updatePriceByBidOrder(id, orderPrice) {
+        return await productModel.findByIdAndUpdate(id, {price: orderPrice});
     }
     static async deleteProduct(id) {
         return await productModel.findByIdAndDelete(id);
