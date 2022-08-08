@@ -20,6 +20,7 @@ const PostProductModal = () => {
         let dataType = document.getElementById('koiType').value;
         let dataLength = document.getElementById('koiLength').value;
         let dataGender = document.getElementById('koiGender').value;
+        let dataAge = document.getElementById('koiAge').value;
         let dataPrice = document.getElementById('koiPrice').value;
         let dataDate = document.getElementById('koiDate').value;
         let dataImage = document.getElementById('koiPicture').files[0];
@@ -31,6 +32,7 @@ const PostProductModal = () => {
             newData.append('type', dataType)
             newData.append('length', dataLength)
             newData.append('gender', dataGender)
+            newData.append('age', dataAge)
             newData.append('price', dataPrice)
             newData.append('range', rangeValue)
             newData.append('date', dataDate)
@@ -50,10 +52,11 @@ const PostProductModal = () => {
     
     return (
         <div className={`${popUp==='post' && 'bg-zinc-200 opacity-95 fixed inset-0 z-50'}`} onClick={handleCloseModal}>
-            <div id='outsideModal' className="flex h-screen justify-center items-center">
-                <div className="flex-col justify-center bg-white border-4 border-gray-500 rounded-xl w-1/6">
-                    <p className='mb-4 mt-4 text-2xl'>Add Koi</p>
-                    <form className='flex flex-col justify-center items-center' onSubmit={handlePostProduct}> 
+            <div id='outsideModal' className="flex flex-col h-screen justify-center items-center">
+                <form className='flex flex-col justify-center items-center bg-white border-4 border-gray-500 rounded-xl w-2/5' onSubmit={handlePostProduct}>
+                <p className='mb-4 mt-4 text-2xl'>Add Koi</p>
+                <div className='flex flex-row justify-center items-center w-full'>
+                    <div className='flex flex-col items-center justify-center w-1/2'>
                         <div className='flex flex-col justify-start w-3/4'>
                             <p className='flex text-left'>Type</p>
                             <select className='w-full border-2 border-gray-500 rounded-lg mb-4' id='koiType'>
@@ -76,6 +79,16 @@ const PostProductModal = () => {
                             </select>
                         </div>
                         <div className='flex flex-col justify-start w-3/4'>
+                            <p className='flex text-left'>Age</p> 
+                            <select className='w-full border-2 border-gray-500 rounded-lg mb-4' id='koiAge'>
+                                {postProductData[2].dropdown.map((item, index) => {
+                                    return <option key={index} value={item}>{item}</option>
+                                })}
+                            </select>
+                        </div>
+                    </div>
+                    <div className='flex flex-col items-center justify-center w-1/2'>
+                        <div className='flex flex-col justify-start w-3/4'>
                             <p className='flex text-left'>Start Price (IDR)</p> <input type='number' placeholder='ex. 2500000' className='w-full border-2 border-gray-500 rounded-lg mb-4' id='koiPrice'/>
                         </div>
                         <div className='flex flex-col justify-start w-3/4'>
@@ -97,11 +110,12 @@ const PostProductModal = () => {
                             <input type='datetime-local' className='w-full border-2 border-gray-500 rounded-lg mb-4' id='koiDate' min={new Date().toISOString().slice(0, -8)}/>
                         </div>
                         <div className='flex flex-col justify-start w-3/4'>
-                            <p className='flex text-xs text-left'>Picture (max. 5MB - jpeg/png)</p> <input type='file' className='w-full border-2 border-gray-500 rounded-lg mb-6' id='koiPicture' accept='image/png, image/jpeg'/>
+                            <p className='flex text-xs text-left'>Picture (max. 5MB - jpeg/png)</p> <input type='file' className='w-full border-2 border-gray-500 rounded-lg mb-2' id='koiPicture' accept='image/png, image/jpeg'/>
                         </div>
-                        <button className='w-2/3 h-12 border-2 border-gray-500 rounded-lg mb-4'>Post</button>
-                    </form>
+                    </div>
                 </div>
+                <button className='w-2/3 h-12 border-2 border-gray-500 rounded-lg mb-4'>Post</button>
+                </form>
             </div>
         </div>
     )

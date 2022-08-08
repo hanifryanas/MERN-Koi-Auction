@@ -21,6 +21,18 @@ class BidController {
             });
         })
     }
+    static async getBidOrders(req, res) {
+        const { id } = req.params;
+        OrderServiceModel.getBidOrdersById(id)
+        .then((orders) => {
+            res.status(200).json(orders);
+        })
+        .catch((err) => {
+            res.status(500).json({
+                message: err
+            });
+        })
+    }
 }
 
 module.exports = BidController;

@@ -42,7 +42,7 @@ return (
             <div className='w-1/3 h-2/3 bg-slate-100'>
                 <VideoCard detailProduct={detailProduct}/>
             </div>
-        <div className='flex flex-col w-1/3 h-full bg-slate-800'>
+        <div className='flex flex-col w-1/3 h-full bg-slate-100'>
             <TopBidder detailProduct={detailProduct}/>
         </div>
     </div>

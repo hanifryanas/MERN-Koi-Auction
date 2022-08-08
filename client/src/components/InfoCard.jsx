@@ -20,7 +20,7 @@ const InfoCard = (detailProduct) => {
         </div>
         <div className='flex flex-col px-3 py-3 w-2/3'>
           <p className='flex justify-start text-left text-gray-400'>Age</p>
-          <span className='flex justify-start text-left mt-3 text-3xl'>Tosai</span>
+          <span className='flex justify-start text-left mt-3 text-3xl'>{product.age}</span>
         </div>
         <div className='flex flex-col px-3 py-3 ml-14 w-full'>
           <p className='flex justify-start text-left text-gray-400'>Gender</p>

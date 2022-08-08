@@ -85,5 +85,16 @@ export const postProductData = [
             'Female',
             'Unknown',
         ]
+    },
+    {
+        title : 'Age',
+        dropdown : [
+            '-',
+            'Tosai',
+            'Nisai',
+            'Sansai',
+            'Yonsai',
+            'Gosai',
+        ]
     }
 ]

@@ -4,6 +4,7 @@ const productSchema = new Schema({
     type: String,
     length: Number,
     gender: String,
+    age : String,
     price: Number,
     range: Number,
     date: String,

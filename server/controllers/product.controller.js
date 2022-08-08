@@ -85,11 +85,12 @@ class ProductController {
     }
     
     static async createProduct(req, res) {
-        const { type, length, gender, price, range, date } = req.body;
+        const { type, length, gender, price, range, date, age } = req.body;
         let newProduct = {
             type,
             length,
             gender,
+            age,
             price,
             range,
             date
@@ -112,11 +113,12 @@ class ProductController {
 
     static async updateProduct(req, res) {
         const { id } = req.params;
-        const { type, length, gender, price, range, date } = req.body;
+        const { type, length, gender, age, price, range, date } = req.body;
         let updatedProduct = {
             type,
             length,
             gender,
+            age,
             price,
             range,
             date

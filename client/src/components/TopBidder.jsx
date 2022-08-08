@@ -2,7 +2,9 @@ import React from 'react'
 
 const TopBidder = () => {
   return (
-    <div>TopBidder</div>
+    <div className='bg-white h-full'>
+      TopBidder
+    </div>
   )
 }
 

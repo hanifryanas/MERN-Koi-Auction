@@ -19,6 +19,9 @@ class OrderServiceModel{
     static async getOrderById(id){
         return orderModel.findById(id);
     }
+    static async getBidOrdersById(id){
+        return orderModel.findById(id).sort({price: -1}).limit(7);
+    }
     static async updateOrder(id, order){
         return orderModel.findByIdAndUpdate(id, order);
     }

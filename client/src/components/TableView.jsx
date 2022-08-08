@@ -87,6 +87,7 @@ const TableView = () => {
                         <th>Type</th>
                         <th>Length</th>
                         <th>Gender</th>
+                        <th>Age</th>
                         <th>Price</th>
                         <th>Bid Range</th>
                         <th>Due Date</th>
@@ -102,9 +103,9 @@ const TableView = () => {
                                 <td>{item.type}</td>
                                 <td>{item.length}</td>
                                 <td>{item.gender}</td>
+                                <td>{item.age}</td>
                                 <td>{item.price}</td>
-                                <td>{item.range}
-                                </td>
+                                <td>{item.range}</td>
                                 <td>{item.date}</td>
                                 <td><img src={item.image} alt={item.name} className='w-10 h-10' /></td>
                                 <td>
@@ -118,7 +119,7 @@ const TableView = () => {
                 </tbody>
             </table>
             <form className={`flex flex-col w-1/5 h-1/2 px-2 border-2 border-slate-700 rounded-lg items-center ${isEdit===false && `hidden`}`} onSubmit={handleUpdateProduct}>
-                <div className='absolute right-40 text-3xl text-red-800 hover:cursor-pointer' onClick={()=>setIsEdit(false)}><FiX/></div>
+                <div className='flex w-full justify-end text-2xl text-red-800 hover:cursor-pointer mt-1' onClick={()=>setIsEdit(false)}><FiX/></div>
                 <h1 className='my-4 text-xl'>Update Product</h1>
                 <div className='flex flex-row gap-5'>
                     <div className='flex flex-col items-start my-1'>
@@ -138,12 +139,15 @@ const TableView = () => {
                 </div>
                 <div className='flex flex-row gap-5'>
                     <div className='flex flex-col items-start my-1'>
-                        <label className='flex justify-start text-sm'>Gender</label>
-                        <select id='updateGender' className='w-24 px-2 py-1 border-2 border-slate-700 rounded-lg'>
+                        <label className='flex justify-start text-sm'>Age</label>
+                        <select id='updateAge' className='w-24 px-2 py-1 border-2 border-slate-700 rounded-lg'>
                             <option hidden>Select</option>
-                            <option value='Male'>Male</option>
-                            <option value='Female'>Female</option>
-                            <option value='Unknown'>Unknown</option>
+                            <option value='-'>-</option>
+                            <option value='Tosai'>Tosai</option>
+                            <option value='Nisai'>Nisai</option>
+                            <option value='Sansai'>Sansai</option>
+                            <option value='Yonsai'>Yonsai</option>
+                            <option value='Gosai'>Gosai</option>
                         </select>
                     </div>
                     <div className='flex flex-col items-start my-1'>
@@ -156,9 +160,20 @@ const TableView = () => {
                         </select>
                     </div>
                 </div>
+                <div className='flex flex-row gap-5'>
                 <div className='flex flex-col items-start my-1'>
-                    <label className='flex justify-start text-sm'>Price</label>
-                    <input type='number' className='rounded-md w-full h-8 p-2 border-2 border-slate-700' id='updatePrice'/>
+                        <label className='flex justify-start text-sm'>Gender</label>
+                        <select id='updateGender' className='w-16 px-2 py-1 border-2 border-slate-700 rounded-lg'>
+                            <option hidden>Select</option>
+                            <option value='Male'>Male</option>
+                            <option value='Female'>Female</option>
+                            <option value='Unknown'>Unknown</option>
+                        </select>
+                    </div>
+                    <div className='flex flex-col items-start my-1'>
+                        <label className='flex justify-start text-sm'>Price</label>
+                        <input type='number' className='rounded-md h-8 p-2 w-28 border-2 border-slate-700' id='updatePrice'/>
+                    </div>
                 </div>
                 <div className='flex flex-col items-start my-1'>
                     <label className='flex justify-start text-sm'>New Due Date</label>
